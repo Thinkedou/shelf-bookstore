@@ -43,17 +43,16 @@ import { bookstore } from '@/assets/js/bookstore';
 
 export default {
   name: "BookHome",
-  
   components:{
     BookCard,
     HelperCard
     },
     data:()=>({
         bookstore,
-        perPage:8,
-        nbPages:0,
-        page:1,
-        xTotal:0
+        perPage:8, // nombre de bouquins par page
+        nbPages:0, // initialisation à zéro en attendant de savoir le nb de bouquin total
+        page:1, // page en cours 
+        xTotal:0 // nb total de bouquins
     }),
     watch:{
         $route(newRoute){
