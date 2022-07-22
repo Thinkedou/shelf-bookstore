@@ -1,32 +1,38 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
-    <router-view/>
+    <div class="container">
+        <BookHeader/>
+          <router-view></router-view>
+        <BookFooter />
+    </div>
   </div>
 </template>
 
+<script>
+
+import BookHeader from './components/BookHeader.vue';
+import BookFooter from './components/BookFooter.vue';
+
+export default {
+  name: "App",
+  components:{
+    BookHeader,
+    BookFooter
+},
+  created() {},
+  data() {
+    return {};
+  },
+  props: {},
+  methods: {},
+};
+</script>
+
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+@import './assets/font-awesome-4.7.0/css/font-awesome.css';
+@import './assets/css/bootstrap.min.css';
+@import './assets/css/tooplate-style.css';
 
-nav {
-  padding: 30px;
-}
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>
