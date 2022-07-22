@@ -3,7 +3,7 @@
     <div class="tm-main-content">
         <section class="tm-margin-b-l">
             <header>
-                <h2 class="tm-main-title">Welcome to our bookstore</h2>    
+                <h2 class="tm-main-title">Welcome to our bookstore page ({{page}})</h2>    
             </header>
             
             <p>Shelf HTML template is provided by Tooplate. Please tell your friends about it. Thank you. Images are from Unsplash website. In tincidunt metus sed justo tincidunt sollicitudin. Curabitur magna tellus, condimentum vitae consectetur id, elementum sit amet erat.</p>
@@ -24,9 +24,7 @@
             
             <nav class="tm-gallery-nav">
                 <ul v-if='nbPages>1' class="nav justify-content-center">
-
-                    <li v-for='(page) in nbPages' :key='page' class="nav-item"><a class="nav-link active" href="#">{{page}}</a></li>
-                 
+                    <li v-for='(page) in nbPages' :key='page' class="nav-item nav-link active" @click="goToPage(page)">{{page}}</li>
                 </ul>
             </nav>
         </section>
@@ -57,10 +55,18 @@ export default {
         page:1,
         xTotal:0
     }),
+    watch:{
+        $route(newRoute){
+            console.warn('OH la route a changée pour ',newRoute)
+            this.page = this.$route.query.page 
+        }
+    },
     computed:{
-    partialBookStore(){
-        return bookstore.slice(16,24)
-     }
+        partialBookStore(){
+            const startIndex = this.page==1?0:(this.page-1)*this.perPage
+            const endIndex   = this.page*this.perPage
+            return bookstore.slice(startIndex,endIndex)
+        }
     },
   methods: {
     goToBooks(bookId){
@@ -71,13 +77,23 @@ export default {
             }
         })
         console.log('click sur ',bookId)
+    },
+    goToPage(page){
+
+        const routerOpt = {
+            query:{
+                page
+            }
+        }
+        this.$router.push(routerOpt)
+        console.log('go to page query  > ',page)
     }
   },
   created(){
+    console.log('CREATED')
     this.xTotal = bookstore.length
-    // this.xTotal = 8
     this.nbPages = Math.ceil(this.xTotal/this.perPage)
-    console.log('nombre de pages à prévoir > ',this.nbPages )
+
   }
 };
 </script>
